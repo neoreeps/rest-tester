@@ -154,7 +154,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = httpMethod
     
-        var userData = "None"
+        var userData = NSMutableAttributedString(string: "None")
         var userResponse = NSMutableAttributedString(string: "None")
 
         // Add Basic Authorization
@@ -186,19 +186,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 print(msg)
                 userResponse = NSMutableAttributedString(string: msg)
             } else {
-                /*
-                 let yourAttributes = [NSForegroundColorAttributeName: UIColor.blackColor(), NSFontAttributeName: UIFont.systemFontOfSize(15)]
-                 let yourOther Attributes = [NSForegroundColorAttributeName: UIColor.redColor(), NSFontAttributeName: UIFont.systemFontOfSize(25)]
-                 
-                 let partOne = NSMutableAttributedString(string: "This is an example ", attributes: yourAttributes)
-                 let partTwo = NSMutableAttributedString(string: "for the combination of Attributed String!", attributes: yourOtherAttributes)
-                 
-                 let combination = NSMutableAttributedString()
-                 
-                 combination.appendAttributedString(partOne)
-                 combination.appendAttributedString(partTwo)
-                 */
-                // userResponse = (response?.description)!
                 
                 // generic attributes for bold strings
                 let attrs = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 11)]
@@ -218,16 +205,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
                         let convertedData = try JSONSerialization.jsonObject(with: data!, options: [])
                         if convertedData is NSArray {
-                            userData = "DATA NOT JSON:\n\(dataString)"
+                            userData = NSMutableAttributedString(string: "RAW:\n\(dataString)")
                         } else if let dictData = convertedData as? NSDictionary {
-                            userData += "\nJSON:"
-                            for (key, value) in dictData {
-                                userData += "\nK: \(key), V: \(value)"
+                            userData = NSMutableAttributedString(string: "JSON:")
+                            for (k, v) in dictData {
+                                let boldString = NSMutableAttributedString(string: "\n\(k): ", attributes: attrs)
+                                let standardString = NSMutableAttributedString(string: "\(v)")
+                                boldString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blue, range: NSRange(location: 0, length: (k as! String).characters.count + 1))
+                                boldString.append(standardString)
+                                userData.append(boldString)
                             }
                         }
                     } catch let error as NSError {
-                        let msg = "ERROR JSON: \(error.localizedDescription)"
-                        userData = msg
+                        userData = NSMutableAttributedString(string: "ERROR JSON: \(error.localizedDescription)")
                     }
                 }
             }
@@ -235,7 +225,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             // update UI on main thread only, called from within closure
             DispatchQueue.main.async {
                 // do UI updates here
-                self.urlData.insertText(userData)
+                self.urlData.attributedText = userData
                 self.urlResponse.attributedText = userResponse
             }
         })
