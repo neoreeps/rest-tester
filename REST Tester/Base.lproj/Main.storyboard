@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A319" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A319" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="sVj-u1-LWB">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,11 +38,17 @@
                                             </button>
                                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lc9-r6-1Mg">
                                                 <color key="backgroundColor" red="0.90365932642487046" green="0.90365932642487046" blue="0.90365932642487046" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" title="Headers"/>
+                                                <state key="normal" title="Header"/>
+                                                <connections>
+                                                    <action selector="addFieldsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ANc-c8-5ge"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CxI-wu-4Cx">
                                                 <color key="backgroundColor" red="0.90365932642487046" green="0.90365932642487046" blue="0.90365932642487046" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Data"/>
+                                                <connections>
+                                                    <action selector="addFieldsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H1y-qN-YtI"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.90365932642487046" green="0.90365932642487046" blue="0.90365932642487046" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -121,6 +127,7 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="IQ8-s3-Ive"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mainStack" destination="bdr-Su-iSC" id="eUt-dR-gET"/>
@@ -185,6 +192,88 @@
                         <constraint firstAttribute="bottom" secondItem="u0d-dQ-KXK" secondAttribute="bottom" id="tZN-yn-JqB"/>
                     </constraints>
                 </view>
+            </objects>
+            <point key="canvasLocation" x="1072.8" y="138.0809595202399"/>
+        </scene>
+        <!--Add Fields View Controller-->
+        <scene sceneID="IyG-8F-NtK">
+            <objects>
+                <tableViewController storyboardIdentifier="AddFieldsViewController" id="xbv-8i-y6h" customClass="AddFieldsViewController" customModule="REST_Tester" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yAz-wG-1RU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="IGM-da-hxN">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IGM-da-hxN" id="jWl-BP-WFk">
+                                    <frame key="frameInset" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4AM-nP-Zx7"/>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="4AM-nP-Zx7" firstAttribute="top" secondItem="jWl-BP-WFk" secondAttribute="top" id="231-3Z-POz"/>
+                                        <constraint firstAttribute="trailing" secondItem="4AM-nP-Zx7" secondAttribute="trailing" id="BaL-dh-WlB"/>
+                                        <constraint firstItem="4AM-nP-Zx7" firstAttribute="leading" secondItem="jWl-BP-WFk" secondAttribute="leading" id="XOV-lh-I2M"/>
+                                        <constraint firstAttribute="bottom" secondItem="4AM-nP-Zx7" secondAttribute="bottom" id="dHg-EJ-VF9"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="xbv-8i-y6h" id="fn3-Uw-WhK"/>
+                            <outlet property="delegate" destination="xbv-8i-y6h" id="aRV-eB-ojR"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Ypf-TE-Z26">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="1sP-cV-WSW">
+                            <connections>
+                                <action selector="doneButton:" destination="xbv-8i-y6h" id="4xG-SY-7W7"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="15n-eE-jPP"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addFieldsTitle" destination="Ypf-TE-Z26" id="jWm-9e-K3s"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YE1-fY-lbg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1073" y="818"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="7q9-yS-3pg">
+            <objects>
+                <navigationController id="Lu1-Jh-Ezz" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zd0-qC-ggn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="xbv-8i-y6h" kind="relationship" relationship="rootViewController" id="YyA-E6-8S4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S9M-qf-wK3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="134" y="819"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="aMq-42-UGy">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="sVj-u1-LWB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xWM-MK-6cS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="afx-CO-M0V"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sKu-6f-FuC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="133.59999999999999" y="138.0809595202399"/>
         </scene>

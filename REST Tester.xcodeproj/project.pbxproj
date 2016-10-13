@@ -12,6 +12,7 @@
 		146EE7BB1DA33B080051A23F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 146EE7B91DA33B080051A23F /* Main.storyboard */; };
 		146EE7BD1DA33B080051A23F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 146EE7BC1DA33B080051A23F /* Assets.xcassets */; };
 		146EE7C01DA33B080051A23F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 146EE7BE1DA33B080051A23F /* LaunchScreen.storyboard */; };
+		14DFF7EA1DADED23002165B3 /* AddFieldsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DFF7E81DADDFE6002165B3 /* AddFieldsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		146EE7BF1DA33B080051A23F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		146EE7C11DA33B080051A23F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14DFF7E61DAB4764002165B3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		14DFF7E81DADDFE6002165B3 /* AddFieldsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFieldsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,10 +60,11 @@
 			children = (
 				146EE7B51DA33B080051A23F /* AppDelegate.swift */,
 				146EE7B71DA33B080051A23F /* ViewController.swift */,
+				14DFF7E81DADDFE6002165B3 /* AddFieldsViewController.swift */,
 				146EE7B91DA33B080051A23F /* Main.storyboard */,
 				146EE7BC1DA33B080051A23F /* Assets.xcassets */,
-				146EE7BE1DA33B080051A23F /* LaunchScreen.storyboard */,
 				146EE7C11DA33B080051A23F /* Info.plist */,
+				146EE7BE1DA33B080051A23F /* LaunchScreen.storyboard */,
 			);
 			path = "REST Tester";
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 			files = (
 				146EE7B81DA33B080051A23F /* ViewController.swift in Sources */,
 				146EE7B61DA33B080051A23F /* AppDelegate.swift in Sources */,
+				14DFF7EA1DADED23002165B3 /* AddFieldsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

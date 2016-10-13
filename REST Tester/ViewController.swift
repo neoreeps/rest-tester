@@ -46,11 +46,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         // set border with rounded corners
         urlData.layer.borderColor = UIColor( red: 153/255, green: 153/255, blue: 153/255, alpha: 1.0 ).cgColor
-        urlData.layer.borderWidth = 2.0
-        urlData.layer.cornerRadius = 8.0
+        urlData.layer.borderWidth = 1.0
+        urlData.layer.cornerRadius = 2.0
         urlResponse.layer.borderColor = UIColor( red: 160/255, green: 160/255, blue: 160/255, alpha: 1.0 ).cgColor
-        urlResponse.layer.borderWidth = 2.0
-        urlResponse.layer.cornerRadius = 8.0
+        urlResponse.layer.borderWidth = 1.0
+        urlResponse.layer.cornerRadius = 2.0
     }
 
     override func didReceiveMemoryWarning() {
@@ -139,6 +139,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 button.setTitle("Method: \(httpMethod)", for: .normal)
             }
         }
+    }
+    
+    @IBAction func addFieldsButton(_ sender: AnyObject) {
+        let addFieldsView = self.storyboard?.instantiateViewController(withIdentifier: "AddFieldsViewController") as! AddFieldsViewController
+        addFieldsView.caller = self
+        if let button = sender as? UIButton {
+            addFieldsView.addFieldsTitle.title = "Add \((button.titleLabel?.text)!) Fields"
+        }
+        
+        let addFieldsViewNav = UINavigationController(rootViewController: addFieldsView)
+        self.present(addFieldsViewNav, animated: true, completion: nil)
     }
     
     @IBAction func sendRequest(_ sender: AnyObject) {
