@@ -204,7 +204,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="IGM-da-hxN">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="IGM-da-hxN">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IGM-da-hxN" id="jWl-BP-WFk">
@@ -236,7 +236,8 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="15n-eE-jPP"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="addFieldsTitle" destination="Ypf-TE-Z26" id="jWm-9e-K3s"/>
+                        <outlet property="addFieldsTitle" destination="Ypf-TE-Z26" id="aVq-7u-59x"/>
+                        <outlet property="dataTable" destination="yAz-wG-1RU" id="z4G-gC-PG4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YE1-fY-lbg" userLabel="First Responder" sceneMemberID="firstResponder"/>
