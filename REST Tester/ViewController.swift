@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var urlString: UITextField!
@@ -20,6 +19,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     var httpMethod = "None" // default
     var globalMethod: UIButton! // global repr of method button
+
+    // lists of query strings and attributes
+    var headerFields = [[String]]()
+    var dataFields = [[String]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,9 +146,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func addFieldsButton(_ sender: AnyObject) {
         let addFieldsView = self.storyboard?.instantiateViewController(withIdentifier: "AddFieldsViewController") as! AddFieldsViewController
+        
+        // pass caller to new view
         addFieldsView.caller = self
+        addFieldsView.headerFields = self.headerFields
+        addFieldsView.dataFields = self.dataFields
+        
         if let button = sender as? UIButton {
             addFieldsView.addFieldsTitle.title = "Add \((button.titleLabel?.text)!) Fields"
+        }
+        
+        // call method to unset button if set
+        if globalMethod != nil && globalMethod.isSelected {
+            methodButton(globalMethod)
         }
         
         let addFieldsViewNav = UINavigationController(rootViewController: addFieldsView)
@@ -212,13 +225,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     userResponse.append(boldString)
                 }
                 if data != nil {
+                    let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                    let rawDataString = NSMutableAttributedString(string: "\nRAW:\n\(dataString)")
+        
                     do {
-                        let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
                         let convertedData = try JSONSerialization.jsonObject(with: data!, options: [])
                         if convertedData is NSArray {
-                            userData = NSMutableAttributedString(string: "RAW:\n\(dataString)")
+                            userData = rawDataString
                         } else if let dictData = convertedData as? NSDictionary {
-                            userData = NSMutableAttributedString(string: "JSON:")
+                            userData = NSMutableAttributedString(string: "\nJSON:")
                             for (k, v) in dictData {
                                 let boldString = NSMutableAttributedString(string: "\n\(k): ", attributes: attrs)
                                 let standardString = NSMutableAttributedString(string: "\(v)")
@@ -228,7 +243,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                             }
                         }
                     } catch let error as NSError {
-                        userData = NSMutableAttributedString(string: "ERROR JSON: \(error.localizedDescription)")
+                        userData = NSMutableAttributedString(string: "JSON ERROR: \(error.localizedDescription)")
+                        userData.append(rawDataString)
                     }
                 }
             }

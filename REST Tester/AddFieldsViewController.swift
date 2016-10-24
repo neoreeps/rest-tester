@@ -14,24 +14,28 @@ class AddFieldsViewController: UITableViewController {
     weak var caller:ViewController?
     
     @IBOutlet weak var dataTable: UITableView!
-
     @IBOutlet var addFieldsTitle: UINavigationItem!
+
+    @IBOutlet var key: UITextField!
+    @IBOutlet var value: UITextField!
     
-    // use one list for each data type, reuse the same table view but populate
-    // with different data baed on button pressed from main view
-    var headerFields = ["1", "2", "3"]
-    var dataFields = ["a", "b", "c"]
+    // var used to reference temp array data; init them all
+    var headerFields = [[String]]()
+    var dataFields = [[String]]()
+    var tableData = [[String]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        dataTable.delegate = self
+        dataTable.dataSource = self
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // editModeTextView.text = previewModeText
     }
     
     override func didReceiveMemoryWarning() {
@@ -39,26 +43,48 @@ class AddFieldsViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func getTableData() -> [[String]] {
+        if addFieldsTitle.title?.lowercased().range(of: "header") != nil {
+            print("TD1: \(self.headerFields.description))")
+            return self.headerFields
+        } else {
+            print("TD1: \(self.dataFields.description))")
+            return self.dataFields
+
+        }
+    }
+    
+    @IBAction func addFields(_ sender: AnyObject) {
+
+        // don't let the user add empty fields
+        if key.text == nil || value.text == nil {
+            return
+        }
+        
+        let tableData = getTableData()
+        
+        if tableData.description == headerFields.description {
+            headerFields.append([key.text!, value.text!])
+        } else {
+            dataFields.append([key.text!, value.text!])
+        }
+        print("TABLE UPDATE: \(tableData)")
+        
+        DispatchQueue.main.async {
+            // do UI updates here
+            self.dataTable.reloadData()
+        }
+        key.text = nil
+        value.text = nil
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func getTableData() -> [String] {
-        if addFieldsTitle.title?.lowercased().range(of: "header") != nil {
-            return self.headerFields
-        } else {
-            return self.dataFields
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var tableData: [String]
         
-        if addFieldsTitle.title?.lowercased().range(of: "header") != nil {
-            tableData = self.headerFields
-        } else {
-            tableData = self.dataFields
-        }
+        let tableData = getTableData()
         
         if tableView == dataTable {
             print("FOUND TABLE: \(tableData.count) cells")
@@ -69,15 +95,16 @@ class AddFieldsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var tableData = getTableData()
+        let tableData = getTableData()
         
         print("TABLE: \(tableView.description)")
         if tableView == dataTable {
-            print("FOUND VIEW!")
-            let cell = dataTable.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+            let cell = dataTable.dequeueReusableCell(withIdentifier: "AddFieldsCell", for: indexPath) as! AddFieldsCell
             
             let row = indexPath.row
-            cell.textLabel?.text = tableData[row]
+
+            cell.key.text = tableData[row][0]
+            cell.value.text = tableData[row][1]
             
             return cell
         }
@@ -86,8 +113,8 @@ class AddFieldsViewController: UITableViewController {
     }
 
     @IBAction func doneButton(_ sender: AnyObject) {
-        // caller!.myTextView.text = editModeTextView.text
-        
+        caller!.headerFields = self.headerFields
+        caller!.dataFields = self.dataFields
         self.dismiss(animated: true, completion: nil)
     }
 }

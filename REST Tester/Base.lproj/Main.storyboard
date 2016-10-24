@@ -63,7 +63,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://api.github.com/users/neoreeps/repos" borderStyle="roundedRect" placeholder="https://api.github.com/users/neoreeps/repos" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hAC-Ko-kwh">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://www.intothewebs.com/" borderStyle="roundedRect" placeholder="http://www.intothewebs.com/" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hAC-Ko-kwh">
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="URL" returnKeyType="continue"/>
@@ -203,15 +203,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <stackView key="tableHeaderView" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" id="tWw-hs-Ocz">
+                            <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nis-Im-gx6">
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="value" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cJT-yO-cgt">
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIE-ER-55r">
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="mT6-T1-LEn"/>
+                                    </constraints>
+                                    <state key="normal" title="Add"/>
+                                    <connections>
+                                        <action selector="addFields:" destination="xbv-8i-y6h" eventType="touchUpInside" id="m0u-Ig-H5h"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="IGM-da-hxN">
-                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddFieldsCell" id="IGM-da-hxN" customClass="AddFieldsCell" customModule="REST_Tester" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="136" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IGM-da-hxN" id="jWl-BP-WFk">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4AM-nP-Zx7"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="4AM-nP-Zx7">
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjx-Op-wsK">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="value" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rXf-F7-oBh">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="4AM-nP-Zx7" firstAttribute="top" secondItem="jWl-BP-WFk" secondAttribute="top" id="231-3Z-POz"/>
@@ -220,6 +258,10 @@
                                         <constraint firstAttribute="bottom" secondItem="4AM-nP-Zx7" secondAttribute="bottom" id="dHg-EJ-VF9"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="key" destination="gjx-Op-wsK" id="uhw-3H-PBC"/>
+                                    <outlet property="value" destination="rXf-F7-oBh" id="ahb-1k-kG5"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -233,11 +275,12 @@
                                 <action selector="doneButton:" destination="xbv-8i-y6h" id="4xG-SY-7W7"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="15n-eE-jPP"/>
                     </navigationItem>
                     <connections>
                         <outlet property="addFieldsTitle" destination="Ypf-TE-Z26" id="aVq-7u-59x"/>
                         <outlet property="dataTable" destination="yAz-wG-1RU" id="z4G-gC-PG4"/>
+                        <outlet property="key" destination="Nis-Im-gx6" id="uYc-Lf-Bgo"/>
+                        <outlet property="value" destination="cJT-yO-cgt" id="HcG-pX-vbN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YE1-fY-lbg" userLabel="First Responder" sceneMemberID="firstResponder"/>
