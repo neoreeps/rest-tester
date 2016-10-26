@@ -31,6 +31,8 @@ class AddFieldsViewController: UITableViewController {
         dataTable.delegate = self
         dataTable.dataSource = self
         
+        // register cell class or through interface builder
+        // self.dataTable.register(UITableViewCell.self, forCellReuseIdentifier: "AddFieldsCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,7 +50,7 @@ class AddFieldsViewController: UITableViewController {
             print("TD1: \(self.headerFields.description))")
             return self.headerFields
         } else {
-            print("TD1: \(self.dataFields.description))")
+            print("TD2: \(self.dataFields.description))")
             return self.dataFields
 
         }

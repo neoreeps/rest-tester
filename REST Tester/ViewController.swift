@@ -16,6 +16,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var secondaryMenu: UIView!
     @IBOutlet var mainStack: UIStackView!
     @IBOutlet var methodStack: UIStackView!
+    @IBOutlet var dataFormat: UISegmentedControl!
     
     var httpMethod = "None" // default
     var globalMethod: UIButton! // global repr of method button
@@ -23,6 +24,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     // lists of query strings and attributes
     var headerFields = [[String]]()
     var dataFields = [[String]]()
+    
+    // access the data globally
+    var data: Data!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,6 +169,48 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.present(addFieldsViewNav, animated: true, completion: nil)
     }
     
+    func convertData() -> NSMutableAttributedString {
+        
+        var userData = NSMutableAttributedString(string: "None")
+        
+        if self.data != nil {
+            let attrs = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 11)]
+
+            let dataString = NSString(data: self.data, encoding: String.Encoding.utf8.rawValue)
+            let rawDataString = NSMutableAttributedString(string: "\n\((dataString?.description)!)")
+            
+            if dataFormat.selectedSegmentIndex == 0 {
+                userData = rawDataString
+            } else if dataFormat.selectedSegmentIndex == 1 {
+                do {
+                    let convertedData = try JSONSerialization.jsonObject(with: self.data, options: [])
+                    if convertedData is NSArray {
+                        userData = rawDataString
+                    } else if let dictData = convertedData as? NSDictionary {
+                        userData = NSMutableAttributedString(string: "")
+                        for (k, v) in dictData {
+                            let boldString = NSMutableAttributedString(string: "\n\(k): ", attributes: attrs)
+                            let standardString = NSMutableAttributedString(string: "\(v)")
+                            boldString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blue, range: NSRange(location: 0, length: (k as! String).characters.count + 1))
+                            boldString.append(standardString)
+                            userData.append(boldString)
+                        }
+                    }
+                } catch let error as NSError {
+                    userData = NSMutableAttributedString(string: "JSON ERROR: \(error.localizedDescription)")
+                    userData.append(rawDataString)
+                }
+            }
+        }
+        
+        return userData
+    }
+    
+    @IBAction func formatData(_ sender: AnyObject) {
+        self.urlData.attributedText = self.convertData()
+        self.reloadInputViews()
+    }
+    
     @IBAction func sendRequest(_ sender: AnyObject) {
 
         // protect against malformed URL
@@ -200,6 +246,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let task = session.dataTask(with: request as URLRequest, completionHandler: {
             data, response, error in
         
+            self.data = data
+            
             print("RESPONSE: \(response)")
             print("DATA: \(data)")
             print("ERROR: \(error)")
@@ -224,30 +272,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     boldString.append(standardString)
                     userResponse.append(boldString)
                 }
-                if data != nil {
-                    let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-                    let rawDataString = NSMutableAttributedString(string: "\nRAW:\n\(dataString)")
-        
-                    do {
-                        let convertedData = try JSONSerialization.jsonObject(with: data!, options: [])
-                        if convertedData is NSArray {
-                            userData = rawDataString
-                        } else if let dictData = convertedData as? NSDictionary {
-                            userData = NSMutableAttributedString(string: "\nJSON:")
-                            for (k, v) in dictData {
-                                let boldString = NSMutableAttributedString(string: "\n\(k): ", attributes: attrs)
-                                let standardString = NSMutableAttributedString(string: "\(v)")
-                                boldString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blue, range: NSRange(location: 0, length: (k as! String).characters.count + 1))
-                                boldString.append(standardString)
-                                userData.append(boldString)
-                            }
-                        }
-                    } catch let error as NSError {
-                        userData = NSMutableAttributedString(string: "JSON ERROR: \(error.localizedDescription)")
-                        userData.append(rawDataString)
-                    }
-                }
             }
+            
+            // convert data as required and display
+            userData = self.convertData()
             
             // update UI on main thread only, called from within closure
             DispatchQueue.main.async {
