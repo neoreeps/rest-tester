@@ -28,8 +28,8 @@ class AddFieldsViewController: UITableViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        dataTable.delegate = self
-        dataTable.dataSource = self
+        // dataTable.delegate = self
+        // dataTable.dataSource = self
         
         // register cell class or through interface builder
         // self.dataTable.register(UITableViewCell.self, forCellReuseIdentifier: "AddFieldsCell")
@@ -47,27 +47,45 @@ class AddFieldsViewController: UITableViewController {
     
     func getTableData() -> [[String]] {
         if addFieldsTitle.title?.lowercased().range(of: "header") != nil {
-            print("TD1: \(self.headerFields.description))")
-            return self.headerFields
+            print("TD1: \(headerFields.description))")
+            return headerFields
+        } else if addFieldsTitle.title?.lowercased().range(of: "data") != nil {
+            print("TD2: \(dataFields.description))")
+            return dataFields
         } else {
-            print("TD2: \(self.dataFields.description))")
-            return self.dataFields
-
+            return [[""]]
         }
     }
     
-    @IBAction func addFields(_ sender: AnyObject) {
-
-        // don't let the user add empty fields
-        if key.text == nil || value.text == nil {
-            return
-        }
-        
+    @IBAction func clearRow(_ sender: AnyObject) {
+        print("TAG: \(sender.tag)")
         let tableData = getTableData()
         
         if tableData.description == headerFields.description {
+            headerFields.remove(at: sender.tag!)
+        } else if tableData.description == dataFields.description {
+            dataFields.remove(at: sender.tag!)
+        }
+        
+        DispatchQueue.main.async {
+            // do UI updates here
+            self.dataTable.reloadData()
+        }
+    }
+    
+    // add button which actually adds data to lists
+    @IBAction func addFields(_ sender: AnyObject) {
+
+        // don't let the user add empty fields
+        if key.text == "" || value.text == "" {
+            return
+        }
+        
+        // don't use getTableData here since we can't distinguish and need a 
+        // reference to the actual table (it is copied between calls)
+        if addFieldsTitle.title?.lowercased().range(of: "header") != nil {
             headerFields.append([key.text!, value.text!])
-        } else {
+        } else if addFieldsTitle.title?.lowercased().range(of: "data") != nil {
             dataFields.append([key.text!, value.text!])
         }
         print("TABLE UPDATE: \(tableData)")
@@ -107,6 +125,7 @@ class AddFieldsViewController: UITableViewController {
 
             cell.key.text = tableData[row][0]
             cell.value.text = tableData[row][1]
+            cell.clearButton.tag = row
             
             return cell
         }

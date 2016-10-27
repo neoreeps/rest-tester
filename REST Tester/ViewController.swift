@@ -120,6 +120,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // called when selecting method type from submenu
     @IBAction func pushButton(_ sender: AnyObject) {
         if let button = sender as? UIButton {
             // use the button label as the method
@@ -130,6 +131,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // shows submenu and changes title based on method chosen
     @IBAction func methodButton(_ sender: AnyObject) {
         globalMethod = sender as? UIButton
         
@@ -169,6 +171,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.present(addFieldsViewNav, animated: true, completion: nil)
     }
     
+    // convert data to requested format, use raw by default
+    // convert to json if requested but fallback to raw if not valid json (i.e. an array)
+    
     func convertData() -> NSMutableAttributedString {
         
         var userData = NSMutableAttributedString(string: "None")
@@ -206,27 +211,28 @@ class ViewController: UIViewController, UITextFieldDelegate {
         return userData
     }
     
+    // toggle for data format
     @IBAction func formatData(_ sender: AnyObject) {
         self.urlData.attributedText = self.convertData()
         self.reloadInputViews()
     }
     
-    @IBAction func sendRequest(_ sender: AnyObject) {
-
-        // protect against malformed URL
-        guard let url = URL(string: urlString.text!) else {
-            let msg = "Error: cannot create URL from \(urlString.text!)"
-            print(msg)
-            urlResponse.text = msg
-            return
-        }
+    func buildRequest(url: URL) -> NSMutableURLRequest {
         
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = httpMethod
-    
-        var userData = NSMutableAttributedString(string: "None")
-        var userResponse = NSMutableAttributedString(string: "None")
 
+        if self.dataFields.count > 0 {
+            var body = "\(self.dataFields[0][0])=\(self.dataFields[0][1])"
+            for x in 1...dataFields.count {
+                if x == 1 { continue }
+                
+                let row = dataFields[x - 1] // count is not 0 based
+                body += "&\(row[0])=\(row[1])"
+            }
+            print("BODY: \(body.description)")
+            request.httpBody = body.data(using: String.Encoding.utf8)
+        }
         // Add Basic Authorization
         /*
          let username = "myUserName"
@@ -240,7 +246,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // Or add Token value
         //request.addValue("Token token=884288bae150b9f2f68d8dc3a932071d", forHTTPHeaderField: "Authorization")
         
+        return request
+    }
+    
+    @IBAction func sendRequest(_ sender: AnyObject) {
+
+        // protect against malformed URL
+        guard let url = URL(string: urlString.text!) else {
+            let msg = "Error: cannot create URL from \(urlString.text!)"
+            print(msg)
+            urlResponse.text = msg
+            return
+        }
+
+        var userData = NSMutableAttributedString(string: "None")
+        var userResponse = NSMutableAttributedString(string: "None")
+        
         // create session and async task
+        let request = buildRequest(url: url)
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         let task = session.dataTask(with: request as URLRequest, completionHandler: {
@@ -286,6 +309,5 @@ class ViewController: UIViewController, UITextFieldDelegate {
         })
         
         task.resume()
-        
     }
 }

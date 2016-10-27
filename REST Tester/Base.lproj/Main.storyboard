@@ -63,7 +63,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://time.jsontest.com" borderStyle="roundedRect" placeholder="http://time.jsontest.com" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hAC-Ko-kwh">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://api.github.com" borderStyle="roundedRect" placeholder="http://api.github.com" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hAC-Ko-kwh">
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="URL" returnKeyType="continue"/>
@@ -253,6 +253,12 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P7N-CM-ap1">
+                                                    <state key="normal" title="Clear"/>
+                                                    <connections>
+                                                        <action selector="clearRow:" destination="xbv-8i-y6h" eventType="touchUpInside" id="QeS-A8-tVA"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </stackView>
                                     </subviews>
@@ -264,6 +270,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="clearButton" destination="P7N-CM-ap1" id="jCd-42-IP1"/>
                                     <outlet property="key" destination="gjx-Op-wsK" id="uhw-3H-PBC"/>
                                     <outlet property="value" destination="rXf-F7-oBh" id="ahb-1k-kG5"/>
                                 </connections>
@@ -290,7 +297,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YE1-fY-lbg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1073" y="818"/>
+            <point key="canvasLocation" x="1072.8" y="817.24137931034488"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7q9-yS-3pg">

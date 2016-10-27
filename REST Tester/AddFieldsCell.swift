@@ -12,6 +12,7 @@ class AddFieldsCell: UITableViewCell {
     
     @IBOutlet weak var key: UILabel!
     @IBOutlet var value: UILabel!
+    @IBOutlet var clearButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
