@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1436E65D1DC2FAEE0050462B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1436E65B1DC2FAEE0050462B /* Model.xcdatamodeld */; };
 		146EE7B61DA33B080051A23F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146EE7B51DA33B080051A23F /* AppDelegate.swift */; };
 		146EE7B81DA33B080051A23F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146EE7B71DA33B080051A23F /* ViewController.swift */; };
 		146EE7BB1DA33B080051A23F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 146EE7B91DA33B080051A23F /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1436E65C1DC2FAEE0050462B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		146EE7B21DA33B080051A23F /* REST Tester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "REST Tester.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		146EE7B51DA33B080051A23F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		146EE7B71DA33B080051A23F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				146EE7B51DA33B080051A23F /* AppDelegate.swift */,
 				146EE7B71DA33B080051A23F /* ViewController.swift */,
 				146EE7B91DA33B080051A23F /* Main.storyboard */,
+				1436E65B1DC2FAEE0050462B /* Model.xcdatamodeld */,
 				146EE7BC1DA33B080051A23F /* Assets.xcassets */,
 				146EE7C11DA33B080051A23F /* Info.plist */,
 				146EE7BE1DA33B080051A23F /* LaunchScreen.storyboard */,
@@ -107,7 +110,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Kenny Speer";
 				TargetAttributes = {
 					146EE7B11DA33B080051A23F = {
@@ -155,6 +158,7 @@
 			files = (
 				146EE7B81DA33B080051A23F /* ViewController.swift in Sources */,
 				146EE7B61DA33B080051A23F /* AppDelegate.swift in Sources */,
+				1436E65D1DC2FAEE0050462B /* Model.xcdatamodeld in Sources */,
 				14DFF7EC1DBBDFE5002165B3 /* AddFieldsCell.swift in Sources */,
 				14DFF7EA1DADED23002165B3 /* AddFieldsViewController.swift in Sources */,
 			);
@@ -200,6 +204,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -250,6 +255,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -281,7 +287,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = LJL98TGLYX;
 				INFOPLIST_FILE = "REST Tester/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "RISE.REST-Tester";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -295,7 +301,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = LJL98TGLYX;
 				INFOPLIST_FILE = "REST Tester/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "RISE.REST-Tester";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -325,6 +331,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1436E65B1DC2FAEE0050462B /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1436E65C1DC2FAEE0050462B /* Model.xcdatamodel */,
+			);
+			currentVersion = 1436E65C1DC2FAEE0050462B /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 146EE7AA1DA33B080051A23F /* Project object */;
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController, UITextFieldDelegate {
     
@@ -22,7 +23,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var globalMethod: UIButton! // global repr of method button
 
     // lists of query strings and attributes
-    var headerFields = [[String]]()
+    var headerFields = [["Accept", "application/json"],
+                        ["Content-Type", "application/x-www-form-urlencoded"]]
     var dataFields = [[String]]()
     
     // access the data globally
@@ -75,16 +77,97 @@ class ViewController: UIViewController, UITextFieldDelegate {
         urlString.resignFirstResponder()
         return true
     }
+
+    // MARK: - Core Data
     
-    // generic function to highlight a button when selected
-    func highlightButton(button: UIButton) {
-        if button.isSelected {
-            button.isSelected = false
-        } else {
-            button.isSelected = true
+    // generic method to retrieve object context
+    func getContext() -> NSManagedObjectContext {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer.viewContext
+    }
+    
+    // load instance from core storage
+    func loadFromCoreStorage(name: String) -> NSManagedObject? {
+        var instance: NSManagedObject?
+        
+        // create fetch request
+        let fetchRequest: NSFetchRequest<FieldData> = FieldData.fetchRequest()
+        
+        do {
+            // get results
+            let searchResults = try getContext().fetch(fetchRequest)
+            
+            // check results
+            print("results count: \(searchResults.count)")
+            
+            // convert to NSManagedObject
+            for dataArray in searchResults as [NSManagedObject] {
+                // interate list of objets and set instance
+                print("RET_NAME: \(dataArray.value(forKey: "name"))")
+                if dataArray.value(forKey: "name") as! String == name {
+                    instance = dataArray
+                }
+                
+            }
+        } catch {
+            print("Error with request: \(error)")
+        }
+        
+        return instance
+    }
+    
+    // clear entry from core data
+    func clearData(entity: NSManagedObject) {
+        let context = getContext()
+        
+        context.delete(entity)
+        do {
+             try context.save()
+        } catch let error as NSError {
+            print("Could not save \(error), \(error.userInfo)")
+        } catch {
         }
     }
-
+    
+    // store arrays as array of arrays accessible by "name"
+    func storeArrays(name: String) {
+        
+        print("SNAME: \(name)")
+        
+        if let obj = self.loadFromCoreStorage(name: name) as NSManagedObject? {
+            self.clearData(entity: obj)
+        }
+        
+        let context = getContext()
+        
+        // retrieve the entity
+        let entity = NSEntityDescription.entity(forEntityName: "FieldData", in: context)
+        let fieldData = NSManagedObject(entity: entity!, insertInto: context)
+        fieldData.setValue(name, forKey: "name")
+        fieldData.setValue([self.headerFields, self.dataFields], forKey: "dataArray")
+        
+        do {
+            try context.save()
+            print("SAVED! \(name)")
+        } catch let error as NSError {
+            print("Could not save \(error), \(error.userInfo)")
+        } catch {
+        }
+    }
+    
+    // load arrays previously stored by "name"
+    func loadArrays(name: String) {
+        
+        print("LNAME: \(name)")
+        if let obj = self.loadFromCoreStorage(name: name) as NSManagedObject? {
+            let loadData = obj.value(forKey: "dataArray") as! NSArray
+            self.headerFields = loadData[0] as! [Array<String>]
+            self.dataFields = loadData[1] as! [Array<String>]
+        }
+    }
+    
+    // MARK: - Secondary Menu
+    
     func hideSecondaryMenu() {
         // closure as argument, can ommit the () if closure is last argument
         // completion has a (bool)->Void signature, where bool is whether the animation has completed.
@@ -117,6 +200,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.secondaryMenu.alpha = 0
         UIView.animate(withDuration: 0.4) {
             self.secondaryMenu.alpha = 1
+        }
+    }
+    
+    // MARK: - Buttons
+    
+    // generic function to highlight a button when selected
+    func highlightButton(button: UIButton) {
+        if button.isSelected {
+            button.isSelected = false
+        } else {
+            button.isSelected = true
         }
     }
     
@@ -170,6 +264,42 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let addFieldsViewNav = UINavigationController(rootViewController: addFieldsView)
         self.present(addFieldsViewNav, animated: true, completion: nil)
     }
+    
+    @IBAction func saveLoadButton(_ sender: AnyObject) {
+        let button = sender as? UIButton
+        
+        let alertController = UIAlertController(title: "Name:", message: "Enter the name of the configuration:", preferredStyle: .alert)
+        
+        let buttonName = (button?.titleLabel?.text)!
+        
+        let confirmAction = UIAlertAction(title: buttonName, style: .default) { (_) in
+            if let field = alertController.textFields![0] as? UITextField {
+                // store your data
+                //UserDefaults.standard.set(field.text, forKey: "userEmail")
+                if (buttonName.range(of: "Load") != nil) {
+                    self.loadArrays(name: field.text!)
+                } else {
+                    self.storeArrays(name: field.text!)
+                }
+            } else {
+                // user did not fill field
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+        
+        alertController.addTextField { (textField) in
+            textField.placeholder = "config name"
+        }
+        
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    
+    // MARK: - URL Requsts
     
     // convert data to requested format, use raw by default
     // convert to json if requested but fallback to raw if not valid json (i.e. an array)
@@ -231,7 +361,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 body += "&\(row[0])=\(row[1])"
             }
             print("BODY: \(body.description)")
-            request.httpBody = body.data(using: String.Encoding.utf8)
+            let postData: Data = body.data(using: String.Encoding.utf8)!
+            request.httpBody = postData
+            
+            // set the content-length in the header since we have a body
+            let postLength: String = String(postData.count)
+            request.setValue(postLength, forHTTPHeaderField: "Content-Length")
+        }
+        
+        if self.headerFields.count > 0 {
+            for header: [String] in headerFields {
+                request.setValue(header[1], forHTTPHeaderField: header[0])
+            }
         }
         // Add Basic Authorization
         /*
