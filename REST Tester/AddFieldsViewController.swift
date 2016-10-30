@@ -49,7 +49,7 @@ class AddFieldsViewController: UITableViewController {
         if addFieldsTitle.title?.lowercased().range(of: "header") != nil {
             print("TD1: \(headerFields.description))")
             return headerFields
-        } else if addFieldsTitle.title?.lowercased().range(of: "data") != nil {
+        } else if addFieldsTitle.title?.lowercased().range(of: "body") != nil {
             print("TD2: \(dataFields.description))")
             return dataFields
         } else {
@@ -85,7 +85,7 @@ class AddFieldsViewController: UITableViewController {
         // reference to the actual table (it is copied between calls)
         if addFieldsTitle.title?.lowercased().range(of: "header") != nil {
             headerFields.append([key.text!, value.text!])
-        } else if addFieldsTitle.title?.lowercased().range(of: "data") != nil {
+        } else if addFieldsTitle.title?.lowercased().range(of: "body") != nil {
             dataFields.append([key.text!, value.text!])
         }
         print("TABLE UPDATE: \(tableData)")

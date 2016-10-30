@@ -64,12 +64,12 @@
 			children = (
 				146EE7B51DA33B080051A23F /* AppDelegate.swift */,
 				146EE7B71DA33B080051A23F /* ViewController.swift */,
+				14DFF7E81DADDFE6002165B3 /* AddFieldsViewController.swift */,
 				146EE7B91DA33B080051A23F /* Main.storyboard */,
 				1436E65B1DC2FAEE0050462B /* Model.xcdatamodeld */,
 				146EE7BC1DA33B080051A23F /* Assets.xcassets */,
 				146EE7C11DA33B080051A23F /* Info.plist */,
 				146EE7BE1DA33B080051A23F /* LaunchScreen.storyboard */,
-				14DFF7E81DADDFE6002165B3 /* AddFieldsViewController.swift */,
 				14DFF7EB1DBBDFE5002165B3 /* AddFieldsCell.swift */,
 			);
 			path = "REST Tester";
@@ -292,6 +292,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "RISE.REST-Tester";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -306,6 +307,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "RISE.REST-Tester";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

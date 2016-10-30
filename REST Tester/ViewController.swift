@@ -268,7 +268,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func saveLoadButton(_ sender: AnyObject) {
         let button = sender as? UIButton
         
-        let alertController = UIAlertController(title: "Name:", message: "Enter the name of the configuration:", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Name", message: "Enter the name of the configuration:", preferredStyle: .alert)
         
         let buttonName = (button?.titleLabel?.text)!
         

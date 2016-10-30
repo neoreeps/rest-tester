@@ -55,7 +55,7 @@
                                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CxI-wu-4Cx">
                                                 <rect key="frame" x="248" y="0.0" width="124" height="44"/>
                                                 <color key="backgroundColor" red="0.90365932642487046" green="0.90365932642487046" blue="0.90365932642487046" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" title="Data"/>
+                                                <state key="normal" title="Body"/>
                                                 <connections>
                                                     <action selector="addFieldsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H1y-qN-YtI"/>
                                                 </connections>
