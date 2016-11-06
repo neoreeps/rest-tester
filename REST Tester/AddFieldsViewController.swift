@@ -53,7 +53,7 @@ class AddFieldsViewController: UITableViewController {
             print("TD2: \(dataFields.description))")
             return dataFields
         } else {
-            return [[""]]
+            return [["", ""]]
         }
     }
     
@@ -122,7 +122,8 @@ class AddFieldsViewController: UITableViewController {
             let cell = dataTable.dequeueReusableCell(withIdentifier: "AddFieldsCell", for: indexPath) as! AddFieldsCell
             
             let row = indexPath.row
-
+            print("COUNT: \(tableData[row].count)")
+            
             cell.key.text = tableData[row][0]
             cell.value.text = tableData[row][1]
             cell.clearButton.tag = row

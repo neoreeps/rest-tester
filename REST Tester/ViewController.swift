@@ -144,7 +144,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let entity = NSEntityDescription.entity(forEntityName: "FieldData", in: context)
         let fieldData = NSManagedObject(entity: entity!, insertInto: context)
         fieldData.setValue(name, forKey: "name")
-        fieldData.setValue([self.headerFields, self.dataFields], forKey: "dataArray")
+        fieldData.setValue(self.headerFields, forKey: "headerFields")
+        fieldData.setValue(self.dataFields, forKey: "bodyFields")
+        fieldData.setValue(self.urlString.text!, forKey: "url")
         
         do {
             try context.save()
@@ -160,9 +162,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         print("LNAME: \(name)")
         if let obj = self.loadFromCoreStorage(name: name) as NSManagedObject? {
-            let loadData = obj.value(forKey: "dataArray") as! NSArray
-            self.headerFields = loadData[0] as! [Array<String>]
-            self.dataFields = loadData[1] as! [Array<String>]
+            self.headerFields = obj.value(forKey: "headerFields") as! [Array<String>]
+            self.dataFields = obj.value(forKey: "bodyFields") as! [Array<String>]
+            self.urlString.text = obj.value(forKey: "url") as? String
         }
     }
     
