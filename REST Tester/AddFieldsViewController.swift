@@ -11,7 +11,8 @@ import UIKit
 
 class AddFieldsViewController: UITableViewController {
     
-    weak var caller:ViewController?
+    // set the caller from the caller for access here
+    weak var caller: ViewController?
     
     @IBOutlet weak var dataTable: UITableView!
     @IBOutlet var addFieldsTitle: UINavigationItem!

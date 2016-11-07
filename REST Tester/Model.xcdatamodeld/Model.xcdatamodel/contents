@@ -3,10 +3,11 @@
     <entity name="FieldData" representedClassName="FieldData" syncable="YES" codeGenerationType="class">
         <attribute name="bodyFields" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="headerFields" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="method" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="FieldData" positionX="-45" positionY="0" width="128" height="105"/>
+        <element name="FieldData" positionX="-45" positionY="0" width="128" height="120"/>
     </elements>
 </model>

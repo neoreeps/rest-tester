@@ -27,6 +27,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         ["Content-Type", "application/x-www-form-urlencoded"]]
     var dataFields = [[String]]()
     
+    // config name for loading from picker
+    var configNames = [String]()
+    
     // access the data globally
     var data: Data!
     
@@ -97,8 +100,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             // get results
             let searchResults = try getContext().fetch(fetchRequest)
             
-            // check results
+            // check results and clear config name list
             print("results count: \(searchResults.count)")
+            configNames = []
             
             // convert to NSManagedObject
             for dataArray in searchResults as [NSManagedObject] {
@@ -107,8 +111,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 if dataArray.value(forKey: "name") as! String == name {
                     instance = dataArray
                 }
-                
+                configNames += [dataArray.value(forKey: "name") as! String]
             }
+            configNames.sort()
         } catch {
             print("Error with request: \(error)")
         }
@@ -122,7 +127,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         context.delete(entity)
         do {
-             try context.save()
+            try context.save()
+            _ = loadFromCoreStorage(name: "")
         } catch let error as NSError {
             print("Could not save \(error), \(error.userInfo)")
         } catch {
@@ -147,6 +153,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         fieldData.setValue(self.headerFields, forKey: "headerFields")
         fieldData.setValue(self.dataFields, forKey: "bodyFields")
         fieldData.setValue(self.urlString.text!, forKey: "url")
+        fieldData.setValue(self.httpMethod, forKey: "method")
         
         do {
             try context.save()
@@ -162,9 +169,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         print("LNAME: \(name)")
         if let obj = self.loadFromCoreStorage(name: name) as NSManagedObject? {
+    
             self.headerFields = obj.value(forKey: "headerFields") as! [Array<String>]
             self.dataFields = obj.value(forKey: "bodyFields") as! [Array<String>]
             self.urlString.text = obj.value(forKey: "url") as? String
+            self.httpMethod = obj.value(forKey: "method") as! String
         }
     }
     
@@ -267,7 +276,21 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.present(addFieldsViewNav, animated: true, completion: nil)
     }
     
-    @IBAction func saveLoadButton(_ sender: AnyObject) {
+    @IBAction func loadButton(_ sender: Any) {
+        let loadConfigView = self.storyboard?.instantiateViewController(withIdentifier: "LoadConfigViewController") as! LoadConfigViewController
+        
+        // call core storage to load list of configs
+        _ = self.loadFromCoreStorage(name: "")
+        
+        // pass caller to new view
+        loadConfigView.caller = self
+        loadConfigView.pickerData = configNames
+        
+        let loadConfigViewNav = UINavigationController(rootViewController: loadConfigView)
+        self.present(loadConfigViewNav, animated: true, completion: nil)
+    }
+    
+    @IBAction func saveButton(_ sender: AnyObject) {
         let button = sender as? UIButton
         
         let alertController = UIAlertController(title: "Name", message: "Enter the name of the configuration:", preferredStyle: .alert)
@@ -275,14 +298,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let buttonName = (button?.titleLabel?.text)!
         
         let confirmAction = UIAlertAction(title: buttonName, style: .default) { (_) in
+            
             if let field = alertController.textFields![0] as? UITextField {
                 // store your data
-                //UserDefaults.standard.set(field.text, forKey: "userEmail")
-                if (buttonName.range(of: "Load") != nil) {
-                    self.loadArrays(name: field.text!)
-                } else {
-                    self.storeArrays(name: field.text!)
-                }
+                self.storeArrays(name: field.text!)
             } else {
                 // user did not fill field
             }
