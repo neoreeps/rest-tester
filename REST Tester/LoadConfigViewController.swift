@@ -50,6 +50,12 @@ class LoadConfigViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }
     
     @IBAction func deleteConfig(_ sender: Any) {
+        
+        // handle the case where there are no configurations to load
+        if self.configName == nil {
+            self.configName = ""
+        }
+        
         if let obj = caller?.loadFromCoreStorage(name: configName!) as NSManagedObject? {
             caller?.clearData(entity: obj)
         }
@@ -61,7 +67,14 @@ class LoadConfigViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }
     
     @IBAction func doneButton(_ sender: Any) {
+        
+        // handle the case where there are no configurations to load
+        if self.configName == nil {
+            self.configName = ""
+        }
+        
         self.caller?.loadArrays(name: self.configName!)
+            
         self.dismiss(animated: true, completion: nil)
     }
     

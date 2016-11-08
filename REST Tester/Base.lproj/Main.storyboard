@@ -275,7 +275,7 @@
                                 <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IGM-da-hxN" id="jWl-BP-WFk">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="4AM-nP-Zx7">
@@ -390,7 +390,6 @@
         <!--Navigation Controller-->
         <scene sceneID="7q9-yS-3pg">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S9M-qf-wK3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="Lu1-Jh-Ezz" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zd0-qC-ggn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -400,13 +399,13 @@
                         <segue destination="xbv-8i-y6h" kind="relationship" relationship="rootViewController" id="YyA-E6-8S4"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S9M-qf-wK3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="134" y="917"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="aMq-42-UGy">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sKu-6f-FuC" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="sVj-u1-LWB" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xWM-MK-6cS">
@@ -418,6 +417,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="afx-CO-M0V"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sKu-6f-FuC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="133.59999999999999" y="138.0809595202399"/>
         </scene>
