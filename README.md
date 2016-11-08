@@ -8,6 +8,7 @@ REST Tester is the best method to test and verify web based APIs.  Easily create
 
 REST Tester requires IOS 10.0 or greater.
 
+# Version History
 V1.1.2
 Resolved an issue where the app crashes when loading configuration with no saved configurations or when selecting trash with no configurations selected.
 
